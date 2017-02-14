@@ -14,15 +14,29 @@
 <script>
 
 var Component = React.createClass({
+    propTypes: {
+        firstName: React.PropTypes.string.isRequired,
+        middleName: React.PropTypes.string,
+        familyName: React.PropTypes.string.isRequired,
+        address: React.PropTypes.string,
+    },
+    getDefaultProps: function() {
+        return {
+            middleName: '',
+            address: 'n/a',
+        };
+    },
     render: function(){
-        return React.DOM.span(null, "Custom component");
+        return React.DOM.span(null, 'My name is ' + this.props.firstName);
     }
 });
 
 var ComponentFactory = React.createFactory(Component);
 
 ReactDOM.render(
-    React.createElement(Component),
+    React.createElement(Component, {
+        name: 'Bob'
+    }),
 //    ComponentFactory(),
 //    React.createElement("span", null, "Hello"),
     document.getElementById('app')
