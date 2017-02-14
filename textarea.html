@@ -44,12 +44,21 @@ var TextAreaCounter = React.createClass({
     }
 });
 
-ReactDOM.render(
+
+var myTextAreaCounter = ReactDOM.render(
     React.createElement(TextAreaCounter, {
         defaultText: 'Bob'
     }),
     document.getElementById('app')
 );
+
+
+// Доступ к компоненту извне
+var reactAppNode = ReactDOM.findDOMNode(myTextAreaCounter);
+reactAppNode.parentNode === document.getElementById('app'); // true
+myTextAreaCounter.props; // Object { defaultValue: "Bob"}
+myTextAreaCounter.state; // Object { text: "Hello outside world!"}
+
 </script>
 
 </body>
