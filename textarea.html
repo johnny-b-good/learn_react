@@ -22,8 +22,23 @@ var logMixin = {
     componentWillUnmount: function() { this._log('componentWillUnmount', arguments); },
 };
 
+
+var Counter = React.createClass({
+    name: 'Counter',
+    displayName: 'Counter',
+    mixins: [logMixin],
+    propTypes: {
+        count: React.PropTypes.number.isRequired,
+    },
+    render: function(){
+        return React.DOM.span(null, this.props.count);
+    }
+});
+
+
 var TextAreaCounter = React.createClass({
     name: 'TextAreaCounter',
+    displayName: 'TextAreaCounter',
     mixins: [logMixin],
     propTypes: {
         defaultText: React.PropTypes.string,
@@ -44,13 +59,21 @@ var TextAreaCounter = React.createClass({
         });
     },
     render: function(){
+        var counter = null;
+        if (this.state.text.length > 0) {
+            counter = React.DOM.h3(null,
+                React.createElement(Counter, {
+                    count: this.state.text.length
+                })
+            );
+        }
+
         return React.DOM.div(null,
             React.DOM.textarea({
-                // defaultValue: this.props.text,
                 value: this.state.text,
                 onChange: this._textChange,
             }),
-            React.DOM.h3(null, this.state.text.length)
+            counter
         );
     }
 });
